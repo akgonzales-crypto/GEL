@@ -35,7 +35,7 @@ export default function About() {
         <div className="flex items-center gap-4">
          
           <Image 
-            src="/pic1.jpg" 
+            src="/krissa.jpg" 
             alt="Logo" 
             width={72} 
             height={72} 
@@ -75,7 +75,7 @@ export default function About() {
             <span role="img" aria-label="wave"></span> About Me
           </h1>
           <Image 
-            src="/pic1.jpg" 
+            src="/krissa.jpg" 
             alt="Profile Pic" 
             width={160} 
             height={160} 
