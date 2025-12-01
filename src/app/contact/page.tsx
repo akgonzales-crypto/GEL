@@ -8,14 +8,15 @@ import type { FormEvent } from 'react';
 const NavLink = ({ href, text, active = false }: { href: string; text: string; active?: boolean }) => (
   <Link 
     href={href} 
-    
+    // NavLink also uses a multi-line string, but since it uses a template literal (`...`)
+    // and is inside a Client Component, it might not fail, but we'll trim for safety.
     className={`
       py-2 px-4 border-2 border-black rounded-lg text-sm font-bold tracking-wide transition-all duration-150 ease-in-out
       ${active 
         ? 'bg-pink-500 text-white shadow-[4px_4px_0px_0px_#000] active:shadow-[1px_1px_0px_0px_#000] active:translate-x-[3px] active:translate-y-[3px]' 
         : 'bg-white text-black shadow-[4px_4px_0px_0px_#000] hover:bg-pink-100 active:shadow-[1px_1px_0px_0px_#000] active:translate-x-[3px] active:translate-y-[3px]'
       }
-    `}
+    `.trim()} // 🛠️ Applied .trim() for robust hydration
   >
     {text}
   </Link>
@@ -35,13 +36,9 @@ const ContactTile = ({ href, icon, label, value }: ContactTileProps) => (
     href={href} 
     target="_blank" 
     rel="noopener noreferrer" 
-    className="
-      flex items-center p-4 bg-white border-2 border-black rounded-lg 
-      shadow-[4px_4px_0px_0px_#000] transition-all duration-150 ease-in-out
-      hover:bg-pink-100 hover:shadow-[6px_6px_0px_0px_#000] 
-      active:shadow-[1px_1px_0px_0px_#000] active:translate-x-[3px] active:translate-y-[3px]
-      text-left
-    "
+    // 🛠️ FIX APPLIED: Collapsed the multi-line className string into a single line 
+    // to eliminate the source of the hydration error (inconsistent whitespace).
+    className="flex items-center p-4 bg-white border-2 border-black rounded-lg shadow-[4px_4px_0px_0px_#000] transition-all duration-150 ease-in-out hover:bg-pink-100 hover:shadow-[6px_6px_0px_0px_#000] active:shadow-[1px_1px_0px_0px_#000] active:translate-x-[3px] active:translate-y-[3px] text-left"
   >
     <span className="text-3xl mr-4 text-pink-500">{icon}</span>
     <div>
@@ -65,7 +62,7 @@ export default function Contact() {
     
     setTimeout(() => {
       setIsSubmitting(false);
-      setMessageStatus('Message sent successfully! Thank you.');
+      setMessageStatus('Message sent successfully! Thank photo you.');
     
     }, 1500);
   };
@@ -77,6 +74,7 @@ export default function Contact() {
       
       <header className="sticky top-0 z-20 flex justify-between items-center bg-pink-300 px-8 py-4 shadow-lg border-b-4 border-black">
         <div className="flex items-center gap-4">
+          
           
           <Image 
             src="/pic1.jpg" 
@@ -134,6 +132,7 @@ export default function Contact() {
             />
 
             
+            
             <ContactTile 
               icon="📘" 
               label="Facebook" 
@@ -143,7 +142,7 @@ export default function Contact() {
             
           </div>
 
-         
+          
           <h2 className="text-3xl font-bold text-black border-b-2 border-pink-500 pb-2 mb-6">Send Me a Message</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             
@@ -171,7 +170,7 @@ export default function Contact() {
               />
             </div>
 
-           
+            
             <div>
               <label htmlFor="message" className="block text-lg font-medium text-black mb-1">Message</label>
               <textarea 
@@ -183,7 +182,7 @@ export default function Contact() {
               ></textarea>
             </div>
             
-           
+            
             {messageStatus && (
               <p className={`text-center font-semibold py-2 ${messageStatus.includes('successfully') ? 'text-green-600 bg-green-100' : 'text-pink-600 bg-pink-100'} border-2 border-black rounded-lg`}>
                 {messageStatus}
@@ -200,7 +199,7 @@ export default function Contact() {
                   ? 'bg-gray-400 cursor-not-allowed' 
                   : 'hover:bg-pink-600 active:shadow-[1px_1px_0px_0px_#000] active:translate-x-[3px] active:translate-y-[3px]'
                 }
-              `}
+              `.trim()} // 🛠️ Applied .trim() for robust hydration
             >
               {isSubmitting ? 'Sending...' : 'Send Message Now'}
             </button>
