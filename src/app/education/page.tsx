@@ -109,7 +109,7 @@ export default function Education() {
       <header className="sticky top-0 z-20 flex justify-between items-center bg-pink-300 px-8 py-4 shadow-lg border-b-4 border-black">
         <div className="flex items-center gap-4">
           <Image 
-            src="/pic1.jpg" 
+            src="/krissa.jpg" 
             alt="Logo" 
             width={72} 
             height={72} 

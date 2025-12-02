@@ -77,7 +77,7 @@ export default function Contact() {
           
           
           <Image 
-            src="/pic1.jpg" 
+            src="/krissa.jpg" 
             alt="Logo" 
             width={72} 
             height={72} 
